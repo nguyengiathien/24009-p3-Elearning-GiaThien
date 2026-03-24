@@ -23,8 +23,9 @@ const registerValidator = [
     .withMessage('Mật khẩu không được để trống')
     .isLength({ min: 6 })
     .withMessage('Mật khẩu tối thiểu 6 ký tự'),
-
- 
+  body('role')
+    .notEmpty()
+    .withMessage("Vai trò không được để trống")
 ];
 
 const loginValidator = [

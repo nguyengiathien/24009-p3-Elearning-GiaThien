@@ -1,5 +1,6 @@
 
 'use strict';
+const fs = require('fs');
 
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
@@ -13,6 +14,13 @@ const sequelize = new Sequelize(
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT || 'mysql',
     logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: true,
+        ca: fs.readFileSync("ssl/isrgrootx1.pem")
+      }
+    }
   }
 );
 

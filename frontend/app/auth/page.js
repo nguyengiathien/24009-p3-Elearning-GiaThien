@@ -1,13 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { apiRequest, saveAuth } from '../../lib/api'
 
 export default function AuthPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect')
+
   const [tab, setTab] = useState('login')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
@@ -22,6 +25,7 @@ export default function AuthPage() {
     email: '',
     password: '',
     confirmPassword: '',
+    role:'student'
   })
 
   const handleLoginChange = (e) => {
@@ -30,6 +34,20 @@ export default function AuthPage() {
 
   const handleRegisterChange = (e) => {
     setRegisterForm({ ...registerForm, [e.target.name]: e.target.value })
+  }
+
+  const resolveRedirect = (user) => {
+    if (redirect) {
+      router.push(redirect)
+      return
+    }
+
+    if (user.role === 'admin' || user.role === 'instructor') {
+      router.push('/dashboard')
+      return
+    }
+
+    router.push('/')
   }
 
   const handleLogin = async (e) => {
@@ -45,12 +63,7 @@ export default function AuthPage() {
       })
 
       saveAuth(res.data)
-
-      if (res.data.user.role === 'admin' || res.data.user.role === 'instructor') {
-        router.push('/dashboard')
-      } else {
-        router.push('/')
-      }
+      resolveRedirect(res.data.user)
     } catch (error) {
       setMessage(error.message)
     } finally {
@@ -60,6 +73,11 @@ export default function AuthPage() {
 
   const handleRegister = async (e) => {
     e.preventDefault()
+
+    if (registerForm.password !== registerForm.confirmPassword) {
+      setMessage('Mật khẩu nhập lại không khớp')
+      return
+    }
 
     try {
       setLoading(true)
@@ -71,7 +89,7 @@ export default function AuthPage() {
       })
 
       saveAuth(res.data)
-      router.push('/')
+      resolveRedirect(res.data.user)
     } catch (error) {
       setMessage(error.message)
     } finally {
@@ -80,7 +98,7 @@ export default function AuthPage() {
   }
 
   return (
-    <section className="page-container flex min-h-[calc(100vh-180px)] items-center justify-center py-10">
+    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex min-h-[calc(100vh-180px)] items-center justify-center py-10">
       <div className="grid w-full max-w-5xl overflow-hidden rounded-[32px] border border-white/60 bg-white/90 shadow-[0_20px_60px_rgba(15,23,42,0.12)] lg:grid-cols-2">
         <div className="hidden bg-slate-900 p-10 text-white lg:block">
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-slate-300">E-Learning Platform</p>
@@ -95,23 +113,21 @@ export default function AuthPage() {
           <div className="mb-6 flex rounded-2xl bg-slate-100 p-1">
             <button
               onClick={() => setTab('login')}
-              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-                tab === 'login' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
-              }`}
+              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${tab === 'login' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
+                }`}
             >
               Đăng nhập
             </button>
             <button
               onClick={() => setTab('register')}
-              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-                tab === 'register' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
-              }`}
+              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${tab === 'register' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
+                }`}
             >
               Đăng ký
             </button>
           </div>
 
-          {message && <div className="form-message mb-4">{message}</div>}
+          {message && <div className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600">{message}</div>}
 
           {tab === 'login' ? (
             <form className="space-y-4" onSubmit={handleLogin}>
@@ -168,6 +184,14 @@ export default function AuthPage() {
                 value={registerForm.confirmPassword}
                 onChange={handleRegisterChange}
               />
+              <label className="mb-2 block text-sm font-medium text-slate-900">Vai trò</label>
+              <select
+                name="role"
+                onChange={handleRegisterChange}
+                className={`block w-full rounded-xl border-0 py-3 px-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6`} >
+                <option value={"student"}>Học sinh</option>
+                <option value={"teacher"}>Giáo viên</option>
+              </select>
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? 'Đang xử lý...' : 'Đăng ký'}
               </Button>

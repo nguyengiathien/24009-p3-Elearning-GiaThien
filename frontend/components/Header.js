@@ -45,7 +45,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/70 bg-white/80 backdrop-blur-xl">
-      <div className="page-container flex items-center gap-4 py-4">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4 py-4">
         <Link href="/" className="text-xl font-bold tracking-tight text-slate-900">
           E-Learning
         </Link>
@@ -55,7 +55,7 @@ export default function Header() {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="Tìm khóa học..."
-            className="form-input"
+            className="block w-full rounded-xl border-0 py-3 px-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
           />
         </form>
 

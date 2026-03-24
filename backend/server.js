@@ -10,6 +10,8 @@ const sequelize = require('./config/config');
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const courseRoutes = require('./routes/courseRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const requestLogger = require('./middlewares/requestLogger');
 const errorHandler = require('./middlewares/errorHandler');
@@ -17,7 +19,12 @@ const errorHandler = require('./middlewares/errorHandler');
 const server = express();
 const PORT = process.env.PORT || 5000;
 
-server.use(cors());
+server.use(
+  cors({
+    origin: process.env.FRONTEND_URL || true,
+    credentials: true,
+  })
+);
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(requestLogger);
@@ -33,6 +40,8 @@ server.get('/', (req, res) => {
 
 server.use('/api/auth', authRoutes);
 server.use('/api/users', userRoutes);
+server.use('/api/courses', courseRoutes);
+server.use('/api/orders', orderRoutes);
 
 server.use(errorHandler);
 
@@ -40,9 +49,6 @@ const startServer = async () => {
   try {
     await sequelize.authenticate();
     console.log('Kết nối database thành công');
-
-    await sequelize.sync({ alter: true });
-    console.log('Đồng bộ model thành công');
 
     server.listen(PORT, () => {
       console.log(`Server chạy tại http://localhost:${PORT}`);

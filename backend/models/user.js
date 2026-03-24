@@ -11,6 +11,11 @@ const User = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    roleId: {
+      type: DataTypes.BIGINT.UNSIGNED,
+      allowNull: false,
+      field: 'role_id',
+    },
     fullName: {
       type: DataTypes.STRING(150),
       allowNull: false,
@@ -35,15 +40,20 @@ const User = sequelize.define(
       allowNull: true,
       field: 'avatar_url',
     },
-    role: {
-      type: DataTypes.ENUM('admin', 'instructor', 'student'),
-      allowNull: false,
-      defaultValue: 'student',
-    },
     status: {
       type: DataTypes.ENUM('active', 'locked', 'pending'),
       allowNull: false,
       defaultValue: 'active',
+    },
+    emailVerifiedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'email_verified_at',
+    },
+    lastLoginAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'last_login_at',
     },
   },
   {

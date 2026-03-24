@@ -1,12 +1,25 @@
 'use strict';
 
 const path = require('path');
-const { User } = require('../models');
+const { Role, User } = require('../models');
+
+const serializeUser = (user) => ({
+  id: user.id,
+  fullName: user.fullName,
+  email: user.email,
+  phone: user.phone,
+  avatarUrl: user.avatarUrl,
+  role: user.roleInfo?.code || null,
+  status: user.status,
+  createdAt: user.createdAt,
+  updatedAt: user.updatedAt,
+});
 
 const getProfile = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'fullName', 'email', 'phone', 'avatarUrl', 'role', 'status', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'fullName', 'email', 'phone', 'avatarUrl', 'status', 'createdAt', 'updatedAt'],
+      include: [{ model: Role, as: 'roleInfo', attributes: ['id', 'code', 'name'] }],
     });
 
     if (!user) {
@@ -18,7 +31,7 @@ const getProfile = async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      data: user,
+      data: serializeUser(user),
     });
   } catch (error) {
     next(error);
@@ -29,7 +42,9 @@ const updateProfile = async (req, res, next) => {
   try {
     const { fullName, phone } = req.body;
 
-    const user = await User.findByPk(req.user.id);
+    const user = await User.findByPk(req.user.id, {
+      include: [{ model: Role, as: 'roleInfo', attributes: ['id', 'code', 'name'] }],
+    });
 
     if (!user) {
       return res.status(404).json({
@@ -46,15 +61,7 @@ const updateProfile = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: 'Cập nhật trang cá nhân thành công',
-      data: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        phone: user.phone,
-        avatarUrl: user.avatarUrl,
-        role: user.role,
-        status: user.status,
-      },
+      data: serializeUser(user),
     });
   } catch (error) {
     next(error);
