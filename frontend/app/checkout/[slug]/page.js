@@ -65,7 +65,7 @@ function StripePaymentForm({ summary, couponCode, onPaymentSuccess }) {
 
       if (intentRes.data.enrolled) {
         onPaymentSuccess('Đăng ký khóa học thành công')
-        router.push('/my-courses')
+        router.push(`/learn/${summary.course.slug}`)
         return
       }
 
@@ -97,7 +97,7 @@ function StripePaymentForm({ summary, couponCode, onPaymentSuccess }) {
       })
 
       onPaymentSuccess('Thanh toán thành công, bạn đã được ghi danh vào khóa học')
-      router.push('/my-courses')
+      router.push(`/learn/${summary.course.slug}`)
     } catch (error) {
       setMessage(error.message)
     } finally {
@@ -220,7 +220,7 @@ export default function CheckoutPage() {
         <div className="rounded-[32px] border border-emerald-200 bg-emerald-50 p-8 text-center">
           <h1 className="text-2xl font-bold text-emerald-800">Bạn đã mua khóa học này</h1>
           <p className="mt-3 text-emerald-700">Hệ thống ghi nhận bạn đã được ghi danh trước đó.</p>
-          <Button className="mt-6" onClick={() => router.push('/my-courses')}>
+          <Button className="mt-6" onClick={() => router.push(`/learn/${summary.course.slug}`)}>
             Vào học ngay
           </Button>
         </div>

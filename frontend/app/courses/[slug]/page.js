@@ -64,7 +64,7 @@ export default function CourseDetailPage() {
       }
 
       if (course.viewer?.isEnrolled) {
-        router.push('/my-courses')
+        router.push(`/learn/${course.slug}`)
         return
       }
 

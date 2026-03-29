@@ -12,6 +12,8 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const learningRoutes = require('./routes/learningRoutes');
+const quizRoutes = require('./routes/quizRoutes');
 
 const requestLogger = require('./middlewares/requestLogger');
 const errorHandler = require('./middlewares/errorHandler');
@@ -29,6 +31,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(requestLogger);
 
+
 server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 server.get('/', (req, res) => {
@@ -42,6 +45,8 @@ server.use('/api/auth', authRoutes);
 server.use('/api/users', userRoutes);
 server.use('/api/courses', courseRoutes);
 server.use('/api/orders', orderRoutes);
+server.use('/api/learning', learningRoutes);
+server.use('/api/quizzes', quizRoutes);
 
 server.use(errorHandler);
 

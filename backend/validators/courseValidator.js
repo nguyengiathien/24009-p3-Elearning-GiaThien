@@ -1,6 +1,6 @@
 'use strict';
 
-const { body } = require('express-validator');
+const { body, param } = require('express-validator');
 
 const createCourseValidator = [
   body('title')
@@ -43,6 +43,72 @@ const createCourseValidator = [
     .withMessage('isFree phải là true hoặc false'),
 ];
 
+const createSectionValidator = [
+  param('courseId')
+    .isInt({ min: 1 })
+    .withMessage('courseId không hợp lệ'),
+
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('Tiêu đề section không được để trống')
+    .isLength({ min: 2, max: 255 })
+    .withMessage('Tiêu đề section phải từ 2 đến 255 ký tự'),
+
+  body('sortOrder')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage('sortOrder không hợp lệ'),
+];
+
+const createLessonValidator = [
+  param('courseId')
+    .isInt({ min: 1 })
+    .withMessage('courseId không hợp lệ'),
+
+  body('sectionId')
+    .isInt({ min: 1 })
+    .withMessage('sectionId không hợp lệ'),
+
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('Tên bài học không được để trống')
+    .isLength({ min: 2, max: 255 })
+    .withMessage('Tên bài học phải từ 2 đến 255 ký tự'),
+
+  body('lessonType')
+    .isIn(['video', 'document', 'quiz'])
+    .withMessage('lessonType không hợp lệ'),
+
+  body('durationSeconds')
+    .optional({ nullable: true })
+    .isInt({ min: 0 })
+    .withMessage('durationSeconds không hợp lệ'),
+
+  body('isPreview')
+    .optional()
+    .isBoolean()
+    .withMessage('isPreview phải là true hoặc false'),
+
+  body('isPublished')
+    .optional()
+    .isBoolean()
+    .withMessage('isPublished phải là true hoặc false'),
+
+  body('sortOrder')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage('sortOrder không hợp lệ'),
+
+  body('unlockOrder')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage('unlockOrder không hợp lệ'),
+];
+
 module.exports = {
   createCourseValidator,
+  createSectionValidator,
+  createLessonValidator,
 };
