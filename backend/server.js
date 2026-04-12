@@ -14,6 +14,7 @@ const courseRoutes = require('./routes/courseRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const learningRoutes = require('./routes/learningRoutes');
 const quizRoutes = require('./routes/quizRoutes');
+const manageCourseRoutes = require('./routes/manageCourseRoutes');
 
 const requestLogger = require('./middlewares/requestLogger');
 const errorHandler = require('./middlewares/errorHandler');
@@ -47,20 +48,19 @@ server.use('/api/courses', courseRoutes);
 server.use('/api/orders', orderRoutes);
 server.use('/api/learning', learningRoutes);
 server.use('/api/quizzes', quizRoutes);
+server.use('/api/manage', manageCourseRoutes);
 
 server.use(errorHandler);
 
-const startServer = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Kết nối database thành công');
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Kết nối database thành công");
+  })
+  .catch((err) => {
+    console.error("Không thể kết nối CSDL: " + err);
+  });
 
-    server.listen(PORT, () => {
-      console.log(`Server chạy tại http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error('Không thể khởi động server:', error.message);
-  }
-};
-
-startServer();
+server.listen(PORT, () => {
+  console.log(`Server chạy tại http://localhost:${PORT}`);
+});
