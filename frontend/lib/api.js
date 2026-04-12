@@ -1,5 +1,3 @@
-const API_BASE_URL = 'http://localhost:5000/api'
-
 export async function apiRequest(endpoint, options = {}) {
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
@@ -9,7 +7,7 @@ export async function apiRequest(endpoint, options = {}) {
     ...options.headers,
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
     ...options,
     headers,
   })
