@@ -6,8 +6,7 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { apiRequest, saveAuth } from '../../lib/api'
 
-export default function AuthPage() {
-
+export default function AuthPageClient() {
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect')
 
@@ -25,7 +24,7 @@ export default function AuthPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'student'
+    role: 'student',
   })
 
   const handleLoginChange = (e) => {
@@ -113,21 +112,27 @@ export default function AuthPage() {
           <div className="mb-6 flex rounded-2xl bg-slate-100 p-1">
             <button
               onClick={() => setTab('login')}
-              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${tab === 'login' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
-                }`}
+              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                tab === 'login' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
+              }`}
             >
               Đăng nhập
             </button>
             <button
               onClick={() => setTab('register')}
-              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${tab === 'register' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
-                }`}
+              className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                tab === 'register' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
+              }`}
             >
               Đăng ký
             </button>
           </div>
 
-          {message && <div className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600">{message}</div>}
+          {message && (
+            <div className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600">
+              {message}
+            </div>
+          )}
 
           {tab === 'login' ? (
             <form className="space-y-4" onSubmit={handleLogin}>
@@ -187,10 +192,12 @@ export default function AuthPage() {
               <label className="mb-2 block text-sm font-medium text-slate-900">Vai trò</label>
               <select
                 name="role"
+                value={registerForm.role}
                 onChange={handleRegisterChange}
-                className={`block w-full rounded-xl border-0 py-3 px-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6`} >
-                <option value={"student"}>Học sinh</option>
-                <option value={"teacher"}>Giáo viên</option>
+                className="block w-full rounded-xl border-0 py-3 px-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+              >
+                <option value="student">Học sinh</option>
+                <option value="teacher">Giáo viên</option>
               </select>
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? 'Đang xử lý...' : 'Đăng ký'}
