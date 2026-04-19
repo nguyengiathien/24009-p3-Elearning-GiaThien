@@ -211,7 +211,7 @@ export default function AdminUsersPage() {
             <option value="">Tất cả trạng thái</option>
             <option value="active">Active</option>
             <option value="locked">Locked</option>
-            <option value="pending">Pending</option>
+            
           </select>
         </div>
 

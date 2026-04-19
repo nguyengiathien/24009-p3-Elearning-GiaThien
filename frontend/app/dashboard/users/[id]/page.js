@@ -162,6 +162,7 @@ export default function AdminUserDetailPage() {
             value={form.email}
             onChange={handleChange}
             placeholder="you@example.com"
+            disabled
           />
 
           <Input
@@ -170,6 +171,7 @@ export default function AdminUserDetailPage() {
             value={form.phone}
             onChange={handleChange}
             placeholder="0901234567"
+            disabled
           />
 
           <div>
@@ -199,7 +201,7 @@ export default function AdminUserDetailPage() {
             >
               <option value="active">Active</option>
               <option value="locked">Locked</option>
-              <option value="pending">Pending</option>
+             
             </select>
           </div>
         </div>

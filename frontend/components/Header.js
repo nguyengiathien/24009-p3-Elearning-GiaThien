@@ -106,7 +106,7 @@ export default function Header() {
                   <Link href="/profile" className="block rounded-2xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50">
                     Trang cá nhân
                   </Link>
-                  <Link href="/my-courses" className="block rounded-2xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50">
+                  <Link href="/courses" className="block rounded-2xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50">
                     Khóa học của tôi
                   </Link>
                   {canAccessDashboard && (

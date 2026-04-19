@@ -41,7 +41,7 @@ const User = sequelize.define(
       field: 'avatar_url',
     },
     status: {
-      type: DataTypes.ENUM('active', 'locked', 'pending'),
+      type: DataTypes.ENUM('active', 'locked'),
       allowNull: false,
       defaultValue: 'active',
     },

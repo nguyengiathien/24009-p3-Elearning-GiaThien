@@ -189,7 +189,7 @@ export default function AdminUserCreatePage() {
             >
               <option value="active">Active</option>
               <option value="locked">Locked</option>
-              <option value="pending">Pending</option>
+              
             </select>
           </div>
 

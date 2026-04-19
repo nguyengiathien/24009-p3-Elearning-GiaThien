@@ -36,7 +36,7 @@ const createUserValidator = [
 
   body('status')
     .optional()
-    .isIn(['active', 'locked', 'pending'])
+    .isIn(['active', 'locked'])
     .withMessage('Trạng thái không hợp lệ'),
 
   body('password')
@@ -79,7 +79,7 @@ const updateUserValidator = [
   body('status')
     .notEmpty()
     .withMessage('Trạng thái không được để trống')
-    .isIn(['active', 'locked', 'pending'])
+    .isIn(['active', 'locked'])
     .withMessage('Trạng thái không hợp lệ'),
 ];
 
@@ -89,7 +89,7 @@ const updateUserStatusValidator = [
   body('status')
     .notEmpty()
     .withMessage('Trạng thái không được để trống')
-    .isIn(['active', 'locked', 'pending'])
+    .isIn(['active', 'locked'])
     .withMessage('Trạng thái không hợp lệ'),
 ];
 
