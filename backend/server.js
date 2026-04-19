@@ -15,6 +15,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const learningRoutes = require('./routes/learningRoutes');
 const quizRoutes = require('./routes/quizRoutes');
 const manageCourseRoutes = require('./routes/manageCourseRoutes');
+const adminUserRoutes = require('./routes/adminUserRoutes');
 
 const requestLogger = require('./middlewares/requestLogger');
 const errorHandler = require('./middlewares/errorHandler');
@@ -32,7 +33,6 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(requestLogger);
 
-
 server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 server.get('/', (req, res) => {
@@ -49,16 +49,17 @@ server.use('/api/orders', orderRoutes);
 server.use('/api/learning', learningRoutes);
 server.use('/api/quizzes', quizRoutes);
 server.use('/api/manage', manageCourseRoutes);
+server.use('/api/admin', adminUserRoutes);
 
 server.use(errorHandler);
 
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Kết nối database thành công");
+    console.log('Kết nối database thành công');
   })
   .catch((err) => {
-    console.error("Không thể kết nối CSDL: " + err);
+    console.error('Không thể kết nối CSDL: ' + err);
   });
 
 server.listen(PORT, () => {

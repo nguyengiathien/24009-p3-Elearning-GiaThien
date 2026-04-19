@@ -120,9 +120,7 @@ export default function ManageCoursesPage() {
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-blue-600">
-            A.10 Quản lý khóa học
-          </p>
+          
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
             Danh sách khóa học quản trị
           </h1>

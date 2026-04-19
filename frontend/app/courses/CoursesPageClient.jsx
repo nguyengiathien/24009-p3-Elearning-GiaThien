@@ -130,7 +130,6 @@ export default function CoursesPageClient() {
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-blue-600">A.3 Danh sách khóa học</p>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Khám phá các khóa học công khai</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
             Lọc theo danh mục, loại giá và chọn khóa học phù hợp để bắt đầu ngay.

@@ -99,9 +99,7 @@ export default function CourseStudentsPage() {
   return (
     <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-blue-600">
-          A.12 Quản lý lớp học / ghi danh
-        </p>
+        
         <h1 className="text-3xl font-bold tracking-tight text-slate-900">
           {course?.title || 'Quản lý học viên'}
         </h1>
